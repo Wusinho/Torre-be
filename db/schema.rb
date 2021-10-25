@@ -10,10 +10,36 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_25_233340) do
+ActiveRecord::Schema.define(version: 2021_10_25_234256) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "developers", force: :cascade do |t|
+    t.string "name"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_developers_on_user_id"
+  end
+
+  create_table "devlangs", force: :cascade do |t|
+    t.string "language"
+    t.string "fluency"
+    t.bigint "developer_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["developer_id"], name: "index_devlangs_on_developer_id"
+  end
+
+  create_table "devstrs", force: :cascade do |t|
+    t.string "name"
+    t.string "proficiency"
+    t.bigint "developer_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["developer_id"], name: "index_devstrs_on_developer_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "username"
@@ -22,4 +48,7 @@ ActiveRecord::Schema.define(version: 2021_10_25_233340) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "developers", "users"
+  add_foreign_key "devlangs", "developers"
+  add_foreign_key "devstrs", "developers"
 end
