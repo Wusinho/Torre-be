@@ -1,5 +1,4 @@
 class UserRequest
-  attr_accessor :response_strength, :response_language, :name
   def initialize
     @response_strength = ''
     @response_language = ''

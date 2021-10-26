@@ -1,13 +1,14 @@
 class JobRequest
-  attr_accessor :response, :title, :responsabilities, :name, :currency, :baseSalary
   def initialize
     @response = ''
-    @title = ''
+    @objective = ''
     @responsabilities = ''
     @name = ''
     @currency = ''
     @baseSalary = ''
     @postid = ''
+    @strengths = ''
+    @languages = ''
   end
 
   def request(id)
@@ -16,21 +17,52 @@ class JobRequest
 
     user_info.each do |key,val|
       if key == 'objective'
-        @title = val
+        @objective = val
       elsif key == 'id'
         @postid = val
       elsif key == 'details'
         @responsabilities = val[0]['content']
+      elsif key == 'languages'
+        @languages = val
+      elsif key == 'strengths'
+        @strengths = val
       elsif key == 'serpTags'
-        @name = val['identifier']['name']
-        @currency = val['baseSalary']['currency']
-        @baseSalary = val['baseSalary']['value']['value']
+        @name = val['organizations']['name']
+        @currency = val['compensation']['currency']
+        @baseSalary = val['compensation']['minAmount']
       end
    end
   end
 
-  def job_save
-    return [ @title, @responsabilities, @name, @currency, @baseSalary, @postid ]
+  def objective
+    @objective
+  end
+
+  def postid
+    @postid
+  end
+
+  def responsabilities
+    @responsabilities
+  end
+
+  def languages
+    @languages
+  end
+
+  def strengths
+    @strengths
   end
   
+  def name
+    @name
+  end
+
+  def currency
+    @currency
+  end
+
+  def baseSalary
+    @baseSalary
+  end
 end
