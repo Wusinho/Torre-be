@@ -1,5 +1,9 @@
+require_relative '../services/authentication_token'
+
 class DevstrsController < ApplicationController
-  before_action :set_devstr, only: [:show, :update, :destroy]
+  include AuthenticationToken
+
+  before_action :authorized, :set_devstr, only: [:show, :update, :destroy]
 
   # GET /devstrs
   def index

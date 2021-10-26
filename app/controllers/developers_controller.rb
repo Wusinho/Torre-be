@@ -1,5 +1,9 @@
+require_relative '../services/authentication_token'
+
 class DevelopersController < ApplicationController
-  before_action :set_developer, only: [:show, :update, :destroy]
+  include AuthenticationToken
+
+  before_action :authorized, :set_developer, only: [:show, :update, :destroy]
 
   # GET /developers
   def index

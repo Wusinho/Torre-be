@@ -1,5 +1,9 @@
+require_relative '../services/authentication_token'
+
 class DevlangsController < ApplicationController
-  before_action :set_devlang, only: [:show, :update, :destroy]
+  include AuthenticationToken
+
+  before_action :authorized, :set_devlang, only: [:show, :update, :destroy]
 
   # GET /devlangs
   def index
