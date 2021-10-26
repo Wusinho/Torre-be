@@ -10,7 +10,6 @@ class JobController < ApplicationController
     req.request(job)
 
     if req
-      byebug
       @post = post_create(req.postid, req.responsabilities, req.name, req.currency, req.baseSalary)
 
       req.languages.each do |ele|
