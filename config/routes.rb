@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resources :joblangs
+  resources :jobstrs
+  resources :posts
   # resources :devstrs
   # resources :devlangs
   # resources :developers

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_25_234256) do
+ActiveRecord::Schema.define(version: 2021_10_26_025525) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,6 +41,36 @@ ActiveRecord::Schema.define(version: 2021_10_25_234256) do
     t.index ["developer_id"], name: "index_devstrs_on_developer_id"
   end
 
+  create_table "joblangs", force: :cascade do |t|
+    t.string "language"
+    t.string "fluency"
+    t.bigint "post_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["post_id"], name: "index_joblangs_on_post_id"
+  end
+
+  create_table "jobstrs", force: :cascade do |t|
+    t.string "name"
+    t.string "proficiency"
+    t.bigint "post_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["post_id"], name: "index_jobstrs_on_post_id"
+  end
+
+  create_table "posts", force: :cascade do |t|
+    t.string "postid"
+    t.string "name"
+    t.string "currency"
+    t.string "salary"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.text "responsabilities"
+    t.index ["user_id"], name: "index_posts_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "username"
     t.string "password_digest"
@@ -51,4 +81,7 @@ ActiveRecord::Schema.define(version: 2021_10_25_234256) do
   add_foreign_key "developers", "users"
   add_foreign_key "devlangs", "developers"
   add_foreign_key "devstrs", "developers"
+  add_foreign_key "joblangs", "posts"
+  add_foreign_key "jobstrs", "posts"
+  add_foreign_key "posts", "users"
 end
