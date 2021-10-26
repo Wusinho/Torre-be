@@ -1,5 +1,5 @@
 class UserRequest
-  attr_accessor :response_strength, :response_language
+  attr_accessor :response_strength, :response_language, :name
   def initialize
     @response_strength = ''
     @response_language = ''
@@ -10,7 +10,7 @@ class UserRequest
     user_response =  RestClient.get("https://bio.torre.co/api/bios/#{name}")
     user_info = JSON.parse(user_response)
     if user_info
-      @name = user_info['name']
+      @name = user_info['person']['name']
       @response_strength = user_info['strengths']
       @response_language = user_info['languages']
     else
