@@ -6,7 +6,8 @@ class JobController < ApplicationController
 
   def apireq
     req = JobRequest.new
-    req.request(id: params[:id])
+    job = job_params['job']
+    req.request(job)
     
     render json: req.objective
 
@@ -14,5 +15,9 @@ class JobController < ApplicationController
 
 private
 
-
+  def job_params
+    params.permit(:job)
+  end
 end
+
+#PW90Gvpr
