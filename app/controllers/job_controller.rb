@@ -10,30 +10,39 @@ class JobController < ApplicationController
     req.request(job)
 
     if req
-      @post = Post.create(req.postid, req.responsabilities, req.name, req.currency, req.salary)
+      byebug
+      @post = post_create(req.postid, req.responsabilities, req.name, req.currency, req.baseSalary)
 
-      req.lang.each do |ele|
-        job_lang(ele['language'], ele['fluency'], @post.id)
+      req.languages.each do |ele|
+        job_lang(ele['language']['name'], ele['fluency'], @post.id)
       end
 
-      req.str.each do |ele|
+      req.strengths.each do |ele|
         job_str(ele['name'], ele['proficiency'], @post.id)
       end
 
     end
     
-    render json: req.objective
+    @allposts = Post.all
+    @joblang = Joblang.all
+    @jobstr = Jobstr.all
+
+    render json: {
+      post: @allposts,
+      joblang: @joblang,
+      jobstr: @jobstr
+    }
 
   end
 
 private
-  def post_create(postid, responsabilities, name, currency, salary)
+  def post_create(postid, responsabilities, name, currency, baseSalary)
     @post = Post.create(
       postid: postid,
       responsabilities: responsabilities,
       name: name,
       currency: currency,
-      salary: salary,
+      salary: baseSalary,
       user_id: logged_in_user.id
     )
   end
